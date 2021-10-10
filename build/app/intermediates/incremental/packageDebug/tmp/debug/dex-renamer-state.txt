@@ -1,0 +1,4 @@
+#Sat Oct 09 18:05:46 EET 2021
+base.0=/home/mhmd/VS_Projects/my_orders/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

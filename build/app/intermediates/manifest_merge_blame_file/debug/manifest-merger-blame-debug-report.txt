@@ -1,0 +1,127 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.my.orders.my_orders"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="20"
+9        android:targetSdkVersion="30" />
+10    <!--
+11         Flutter needs it to communicate with the running application
+12         to allow setting breakpoints, to provide hot reload, etc.
+13    -->
+14    <uses-permission android:name="android.permission.INTERNET" />
+14-->/home/mhmd/VS_Projects/my_orders/android/app/src/debug/AndroidManifest.xml:6:5-66
+14-->/home/mhmd/VS_Projects/my_orders/android/app/src/debug/AndroidManifest.xml:6:22-64
+15    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+15-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:4:5-79
+15-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:4:22-76
+16    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+16-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:5:5-81
+16-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:5:22-78
+17    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+17-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:6:5-77
+17-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:6:22-74
+18    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+18-->[:connectivity_plus] /home/mhmd/VS_Projects/my_orders/build/connectivity_plus/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-79
+18-->[:connectivity_plus] /home/mhmd/VS_Projects/my_orders/build/connectivity_plus/intermediates/library_manifest/debug/AndroidManifest.xml:7:22-76
+19
+20    <uses-feature
+20-->[com.google.android.gms:play-services-maps:17.0.0] /home/mhmd/.gradle/caches/transforms-2/files-2.1/c5de8972dacd649c27c247c9e16de3ac/jetified-play-services-maps-17.0.0/AndroidManifest.xml:26:5-28:35
+21        android:glEsVersion="0x00020000"
+21-->[com.google.android.gms:play-services-maps:17.0.0] /home/mhmd/.gradle/caches/transforms-2/files-2.1/c5de8972dacd649c27c247c9e16de3ac/jetified-play-services-maps-17.0.0/AndroidManifest.xml:27:9-41
+22        android:required="true" />
+22-->[com.google.android.gms:play-services-maps:17.0.0] /home/mhmd/.gradle/caches/transforms-2/files-2.1/c5de8972dacd649c27c247c9e16de3ac/jetified-play-services-maps-17.0.0/AndroidManifest.xml:28:9-32
+23
+24    <application
+24-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:8:5-38:19
+25        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+25-->[androidx.core:core:1.1.0] /home/mhmd/.gradle/caches/transforms-2/files-2.1/2e94107f30f39be366a17347c2bf100b/core-1.1.0/AndroidManifest.xml:24:18-86
+26        android:debuggable="true"
+27        android:icon="@mipmap/ic_launcher"
+27-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:9:9-43
+28        android:label="My Order" >
+28-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:10:9-33
+29        <meta-data
+29-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:11:9-13:71
+30            android:name="com.google.android.geo.API_KEY"
+30-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:12:13-58
+31            android:value="AIzaSyABEHBpyofrt8D8mKeZdh_ciNTMOhm4fK4" />
+31-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:13:13-68
+32
+33        <activity
+33-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:14:9-32:20
+34            android:name="com.my.orders.my_orders.MainActivity"
+34-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:15:13-41
+35            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+35-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:16:13-163
+36            android:hardwareAccelerated="true"
+36-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:17:13-47
+37            android:launchMode="singleTop"
+37-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:18:13-43
+38            android:theme="@style/LaunchTheme"
+38-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:19:13-47
+39            android:windowSoftInputMode="adjustResize" >
+39-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:20:13-55
+40
+41            <!--
+42                 Specifies an Android theme to apply to this Activity as soon as
+43                 the Android process has started. This theme is visible to the user
+44                 while the Flutter UI initializes. After that, this theme continues
+45                 to determine the Window background behind the Flutter UI.
+46            -->
+47            <meta-data
+47-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:25:13-27:57
+48                android:name="io.flutter.embedding.android.NormalTheme"
+48-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:26:17-72
+49                android:resource="@style/NormalTheme" />
+49-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:27:17-54
+50
+51            <intent-filter>
+51-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:28:13-31:29
+52                <action android:name="android.intent.action.MAIN" />
+52-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:29:17-69
+52-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:29:25-66
+53
+54                <category android:name="android.intent.category.LAUNCHER" />
+54-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:30:17-77
+54-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:30:27-74
+55            </intent-filter>
+56        </activity>
+57        <!--
+58             Don't delete the meta-data below.
+59             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+60        -->
+61        <meta-data
+61-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:35:9-37:33
+62            android:name="flutterEmbedding"
+62-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:36:13-44
+63            android:value="2" />
+63-->/home/mhmd/VS_Projects/my_orders/android/app/src/main/AndroidManifest.xml:37:13-30
+64        <!-- Needs to be explicitly declared on P+ -->
+65        <uses-library
+65-->[com.google.android.gms:play-services-maps:17.0.0] /home/mhmd/.gradle/caches/transforms-2/files-2.1/c5de8972dacd649c27c247c9e16de3ac/jetified-play-services-maps-17.0.0/AndroidManifest.xml:33:9-35:40
+66            android:name="org.apache.http.legacy"
+66-->[com.google.android.gms:play-services-maps:17.0.0] /home/mhmd/.gradle/caches/transforms-2/files-2.1/c5de8972dacd649c27c247c9e16de3ac/jetified-play-services-maps-17.0.0/AndroidManifest.xml:34:13-50
+67            android:required="false" />
+67-->[com.google.android.gms:play-services-maps:17.0.0] /home/mhmd/.gradle/caches/transforms-2/files-2.1/c5de8972dacd649c27c247c9e16de3ac/jetified-play-services-maps-17.0.0/AndroidManifest.xml:35:13-37
+68
+69        <activity
+69-->[com.google.android.gms:play-services-base:17.0.0] /home/mhmd/.gradle/caches/transforms-2/files-2.1/7c879cb157fab2c9a5d74c3d70fd64e3/jetified-play-services-base-17.0.0/AndroidManifest.xml:23:9-26:75
+70            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+70-->[com.google.android.gms:play-services-base:17.0.0] /home/mhmd/.gradle/caches/transforms-2/files-2.1/7c879cb157fab2c9a5d74c3d70fd64e3/jetified-play-services-base-17.0.0/AndroidManifest.xml:24:13-79
+71            android:exported="false"
+71-->[com.google.android.gms:play-services-base:17.0.0] /home/mhmd/.gradle/caches/transforms-2/files-2.1/7c879cb157fab2c9a5d74c3d70fd64e3/jetified-play-services-base-17.0.0/AndroidManifest.xml:25:13-37
+72            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+72-->[com.google.android.gms:play-services-base:17.0.0] /home/mhmd/.gradle/caches/transforms-2/files-2.1/7c879cb157fab2c9a5d74c3d70fd64e3/jetified-play-services-base-17.0.0/AndroidManifest.xml:26:13-72
+73
+74        <meta-data
+74-->[com.google.android.gms:play-services-basement:17.0.0] /home/mhmd/.gradle/caches/transforms-2/files-2.1/3c8e7eb3d21ac94d08f658f6d8a1c9f3/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
+75            android:name="com.google.android.gms.version"
+75-->[com.google.android.gms:play-services-basement:17.0.0] /home/mhmd/.gradle/caches/transforms-2/files-2.1/3c8e7eb3d21ac94d08f658f6d8a1c9f3/jetified-play-services-basement-17.0.0/AndroidManifest.xml:24:13-58
+76            android:value="@integer/google_play_services_version" />
+76-->[com.google.android.gms:play-services-basement:17.0.0] /home/mhmd/.gradle/caches/transforms-2/files-2.1/3c8e7eb3d21ac94d08f658f6d8a1c9f3/jetified-play-services-basement-17.0.0/AndroidManifest.xml:25:13-66
+77    </application>
+78
+79</manifest>
