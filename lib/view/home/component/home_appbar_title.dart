@@ -15,29 +15,32 @@ class HomeAppBarTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      child: OutlinedButton.icon(
-        style: ButtonStyle(
-          alignment: context.locale == const Locale('en', 'US')
-              ? Alignment.centerLeft
-              : Alignment.centerRight,
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0),
+      child: Padding(
+        padding: const EdgeInsetsDirectional.only(end: 4.0),
+        child: OutlinedButton.icon(
+          style: ButtonStyle(
+            alignment: context.locale.languageCode == 'en'
+                ? Alignment.centerLeft
+                : Alignment.centerRight,
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
             ),
           ),
-        ),
-        onPressed: onPressed,
-        icon: const FaIcon(
-          FontAwesomeIcons.search,
-          size: 12.0,
-        ),
-        label: Text(
-          "home.search_bar".tr(),
-          maxLines: 1,
-          softWrap: true,
-          style: const TextStyle(
-            fontSize: 12.0,
-            color: Colors.grey,
+          onPressed: onPressed,
+          icon: const FaIcon(
+            FontAwesomeIcons.search,
+            size: 12.0,
+          ),
+          label: Text(
+            "home.search_bar".tr(),
+            maxLines: 1,
+            softWrap: true,
+            style: const TextStyle(
+              fontSize: 12.0,
+              color: Colors.grey,
+            ),
           ),
         ),
       ),

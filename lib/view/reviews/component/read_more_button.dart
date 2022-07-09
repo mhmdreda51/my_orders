@@ -1,7 +1,8 @@
 // ignore: implementation_imports
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:my_orders/constants/app_colors.dart';
+
+import '../../../constants/app_colors.dart';
 
 class ReadMoreButton extends StatelessWidget {
   const ReadMoreButton({
@@ -13,9 +14,7 @@ class ReadMoreButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextButton(
-        onPressed: () {
-          //TODO: add read more function here
-        },
+        onPressed: () {},
         child: Text(
           "reviews.read_more_reviews".tr(),
           style: const TextStyle(

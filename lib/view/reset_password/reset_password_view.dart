@@ -4,11 +4,11 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:my_orders/core/router/router.dart';
-import 'package:my_orders/view/home/home_view.dart';
-import 'package:my_orders/widgets/main_button.dart';
-import 'package:my_orders/widgets/password_text_field.dart';
 
+import '../../core/router/router.dart';
+import '../../widgets/main_button.dart';
+import '../../widgets/password_text_field.dart';
+import '../home/home_view.dart';
 import 'controller/reset_password_cubit.dart';
 
 class ResetPasswordView extends StatelessWidget {

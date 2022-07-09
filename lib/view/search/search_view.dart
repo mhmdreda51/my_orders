@@ -3,12 +3,16 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_orders/constants/app_colors.dart';
-import 'package:my_orders/widgets/bold_header.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../core/router/router.dart';
+import '../../widgets/loading_dialog.dart';
+import '../../widgets/loading_widget.dart';
+import '../../widgets/no_result_widget.dart';
+import '../food/component/store_card.dart';
+import '../store/store_view.dart';
 import 'component/search_appbar_title.dart';
 import 'controller/search_cubit.dart';
-import 'model/filter_button_model.dart';
 
 class SearchView extends StatelessWidget {
   const SearchView({Key? key}) : super(key: key);
@@ -18,52 +22,113 @@ class SearchView extends StatelessWidget {
     return SafeArea(
       child: BlocProvider(
         create: (context) => SearchCubit(),
-        child: BlocBuilder<SearchCubit, SearchState>(
+        child: BlocConsumer<SearchCubit, SearchState>(
+          listener: (context, state) {
+            if (state is SearchErrorState) {
+              Fluttertoast.showToast(msg: 'change_password.some_error');
+            }
+          },
           builder: (context, state) {
             final cubit = SearchCubit.get(context);
             return Scaffold(
-              appBar: AppBar(
-                titleSpacing: 0.0,
-                leadingWidth: 48.0,
-                centerTitle: false,
-                //TODO: handle the search function in here
-                title: SearchAppBarTitle(controller: cubit.searchController),
-              ),
-              body: ListView(
-                shrinkWrap: true,
-                children: [
-                  BoldHeader(text: "search.popular_search".tr()),
-                  Wrap(
-                    children: searchFilterButtonList
-                        .map(
-                          (item) => Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                primary: Colors.white,
-                                side: const BorderSide(
-                                    width: 0.0, color: Colors.transparent),
-                                backgroundColor: item.isSelected
-                                    ? AppColors.redColor
-                                    : AppColors.redColor.withOpacity(0.5),
-                              ),
-                              onPressed: () {
-                                item.isSelected = !item.isSelected;
-                                cubit.changeSelectedFilterButton();
-                                //TODO : add filter button functionality here
-                              },
-                              child: Text(item.text),
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ],
-              ),
-            );
+                body: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: BackButton(),
+                    ),
+                    Form(
+                        key: cubit.formKey,
+                        child: SearchAppBarTitle(
+                          controller: cubit.searchController,
+                          onFieldSubmitted: (value) {
+                            if (cubit.formKey.currentState!.validate()) {
+                              cubit.searchStore(
+                                  query: cubit.searchController.text);
+                            }
+                          },
+                        )),
+                  ],
+                ),
+                state is SearchLoadingState
+                    ? const Expanded(child: LoadingWidget())
+                    : cubit.searchModel != null
+                        ? cubit.searchModel!.data!.isEmpty
+                            ? NoResultsWidget(text: "search.no_results".tr())
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: cubit.searchModel!.data!.length,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      debugPrint(cubit
+                                          .searchModel!.data![index]!.id
+                                          .toString());
+                                      loadingDialog(context);
+                                      cubit
+                                          .getStore(
+                                              storeId: cubit
+                                                  .searchModel!.data![index]!.id
+                                                  .toString())
+                                          .then((storeModel) {
+                                        MagicRouter.pop();
+                                        MagicRouter.navigateTo(StoreView(
+                                            storeModelData: storeModel!.data!));
+                                      });
+                                    },
+                                    child: StoreCard(
+                                        vertical: 4,
+                                        image: cubit.searchModel!.data![index]!.image
+                                            .toString(),
+                                        name: cubit.searchModel!.data![index]!.name
+                                            .toString(),
+                                        description: cubit.searchModel!
+                                            .data![index]!.description
+                                            .toString(),
+                                        rate: double.tryParse(cubit
+                                            .searchModel!.data![index]!.rate
+                                            .toString())!,
+                                        openAt: cubit
+                                            .searchModel!.data![index]!.openAt
+                                            .toString(),
+                                        closeAt: cubit
+                                            .searchModel!.data![index]!.closeAt
+                                            .toString()),
+                                  );
+                                },
+                              )
+                        : const StartSearchWidget(),
+              ],
+            ));
           },
         ),
+      ),
+    );
+  }
+}
+
+class StartSearchWidget extends StatelessWidget {
+  const StartSearchWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.search_rounded, size: 52.0),
+          const SizedBox(height: 8.0),
+          Text(
+            "search.start_search".tr(),
+            style: Theme.of(context).textTheme.headline5,
+          )
+        ],
       ),
     );
   }

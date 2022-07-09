@@ -2,9 +2,9 @@
 
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:my_orders/constants/app_colors.dart';
 import 'package:my_orders/widgets/restaurant_info_column.dart';
 
+import '../constants/app_colors.dart';
 import 'stars_and_time_column.dart';
 
 class FoodItemWithBorder extends StatelessWidget {

@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import '../controller/order_cubit.dart';
 import '../../home/widgets/section_header.dart';
-import '../model/choices_model.dart';
 import '../../../widgets/custom_shape_radio_option.dart';
 
 class ChoicesCard extends StatefulWidget {
   final String headerText;
   final String subText;
   final bool isSubText;
-  final List<ChoicesModel> list;
+  final List? list;
+  final bool isSize;
   const ChoicesCard({
     Key? key,
     required this.headerText,
     required this.list,
     this.subText = '',
     required this.isSubText,
+    required this.isSize,
   }) : super(key: key);
 
   @override
@@ -21,11 +23,7 @@ class ChoicesCard extends StatefulWidget {
 }
 
 class _ChoicesCardState extends State<ChoicesCard> {
-  double? groupValue;
-
-  ValueChanged<double?> valueChangedHandler() {
-    return (value) => setState(() => groupValue = value!);
-  }
+  int? groupValue;
 
   @override
   Widget build(BuildContext context) {
@@ -54,15 +52,18 @@ class _ChoicesCardState extends State<ChoicesCard> {
             border: Border.all(color: Colors.grey),
           ),
           child: ListView.builder(
-            itemCount: widget.list.length,
+            itemCount: widget.list!.length,
             padding: EdgeInsets.zero,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) => CustomShapeRadioOption<double>(
-              value: widget.list[index].value,
+            itemBuilder: (context, index) => CustomShapeRadioOption<int>(
+              id: widget.list![index]!.id!,
+              isSize: widget.isSize,
+              price: widget.list![index]!.price!,
               groupValue: groupValue,
-              onChanged: valueChangedHandler(),
-              title: widget.list[index].title,
+              onChanged: (v) => OrderCubit.get(context)
+                  .valueChangedHandler(widget.isSize, widget.list![index]!.id!),
+              title: widget.list![index]!.name!,
             ),
           ),
         ),

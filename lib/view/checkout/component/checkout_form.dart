@@ -4,9 +4,10 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:my_orders/constants/app_colors.dart';
-import 'package:my_orders/view/checkout/controller/checkout_cubit.dart';
-import 'package:my_orders/widgets/header_text.dart';
+
+import '../../../constants/app_colors.dart';
+import '../../../widgets/header_text.dart';
+import '../controller/checkout_cubit.dart';
 
 class CheckoutForm extends StatelessWidget {
   const CheckoutForm({
@@ -39,7 +40,6 @@ class CheckoutForm extends StatelessWidget {
                   if (cubit.formKey.currentState!.validate()) {}
                 },
                 decoration: const InputDecoration(
-                  //TODO: add the user name form api in here
                   hintText: 'Ahmed Abd-ElHady',
                 ),
               ),
@@ -62,7 +62,6 @@ class CheckoutForm extends StatelessWidget {
                 },
                 // controller: cubit.phoneController,
                 decoration: const InputDecoration(
-                  //TODO: add the user phone form api here
                   hintText: '01xxxxxxxxx',
                 ),
               ),
@@ -81,12 +80,9 @@ class CheckoutForm extends StatelessWidget {
                   if (cubit.formKey.currentState!.validate()) {}
                 },
                 decoration: InputDecoration(
-                  //TODO: add the user address form api here
                   hintText: '15, nour St',
                   suffixIcon: IconButton(
-                    onPressed: () {
-                      //TODO: add navigation here
-                    },
+                    onPressed: () {},
                     icon: const FaIcon(
                       FontAwesomeIcons.mapMarkerAlt,
                       color: AppColors.blackColor,

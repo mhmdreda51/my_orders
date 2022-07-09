@@ -1,22 +1,22 @@
+// ignore_for_file: curly_braces_in_flow_control_structures
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:my_orders/constants/token.dart';
-import 'package:my_orders/core/cacheHelper/cache_helper.dart';
-import 'package:my_orders/view/login/Models/users_model.dart';
 
+import '../../../constants/constants.dart';
+import '../../../core/cacheHelper/cache_helper.dart';
 import '../../../core/dioHelper/dio_helper.dart';
+import '../../../core/firebase/firebase_messaging_helper.dart';
+import '../model/user_model.dart';
 
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitial());
-
   static LoginCubit get(context) => BlocProvider.of(context);
-
 //===============================================================
-  Users? users;
-  List<Users> usersList = [];
+  UserModel? userModel;
   bool isPassword = true;
   IconData suffix = Icons.visibility_outlined;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -29,40 +29,31 @@ class LoginCubit extends Cubit<LoginState> {
     required String password,
   }) async {
     emit(LoginLoadingState());
-    final response = await DioHelper.postData(url: 'client/auth/login', data: {
-      'email': email,
-      'password': password,
-    });
+    final token = await FirebaseMessagingHelper.getToken();
+    final response = await DioHelper.postData(
+      url: login,
+      data: {
+        'email': email,
+        'password': password,
+        'notifi_token': token,
+      },
+    );
     try {
-      users = Users.fromJson(response.data);
-      if (users!.accessToken != null || users!.accessToken != "") {
-        accessToken = users!.accessToken.toString();
-        CacheHelper.saveData(
-            key: 'accessToken', value: users!.accessToken.toString());
-        emit(LoginSuccessState(users: users!));
-      }
-    } catch (e) {
-      Fluttertoast.showToast(msg: e.toString());
+      userModel = UserModel.fromJson(response.data);
+      if (userModel!.accessToken != null)
+        CacheHelper.cacheUserInfo(
+            token: userModel!.accessToken!.toString(), userModel: userModel!);
+      emit(LoginSuccessState(userModel: userModel!));
+    } on DioError catch (e) {
+      debugPrint(e.error.toString());
+    } catch (e, s) {
+      debugPrint(e.toString());
+      debugPrint(s.toString());
       emit(LoginLErrorState(error: e.toString()));
     }
   }
 
 //===============================================================
-  Future<void> getData() async {
-    emit(GetUserDataLoadingState());
-    final userResponse = await DioHelper.getData(url: 'client/auth/login');
-    try {
-      usersList = (userResponse.data as List<dynamic>)
-          .map((value) => Users.fromJson(value))
-          .toList();
-      emit(GetUserDataSuccessState());
-    } catch (error) {
-      Fluttertoast.showToast(msg: error.toString());
-    }
-  }
-
-  //===============================================================
-
   void changePasswordVisibility() {
     isPassword = !isPassword;
     suffix =

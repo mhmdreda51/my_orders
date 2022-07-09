@@ -3,7 +3,8 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:my_orders/constants/app_colors.dart';
+
+import '../../../constants/app_colors.dart';
 
 class MoreDetailsButton extends StatelessWidget {
   const MoreDetailsButton({
@@ -28,10 +29,8 @@ class MoreDetailsButton extends StatelessWidget {
           color: AppColors.redColor,
           borderRadius: BorderRadius.circular(4.0),
         ),
-        child: Flexible(
-          child: AutoSizeText(text,
-              style: const TextStyle(fontSize: 12.0, color: Colors.white)),
-        ),
+        child: AutoSizeText(text,
+            style: const TextStyle(fontSize: 12.0, color: Colors.white)),
       ),
     );
   }

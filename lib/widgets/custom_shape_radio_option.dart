@@ -1,23 +1,32 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import '../constants/app_colors.dart';
+import '../view/order/controller/order_cubit.dart';
 
 class CustomShapeRadioOption<T> extends StatelessWidget {
-  final double value;
-  final double? groupValue;
+  final double price;
+  int? groupValue;
   final String title;
-  final ValueChanged<double?> onChanged;
+  final int id;
+  final Function(int) onChanged;
+  final bool isSize;
 
-  const CustomShapeRadioOption({
+  CustomShapeRadioOption({
     Key? key,
-    required this.value,
+    required this.price,
     required this.groupValue,
     required this.title,
     required this.onChanged,
+    required this.id,
+    required this.isSize,
   }) : super(key: key);
 
-  Widget _buildLabel() {
-    final bool isSelected = value == groupValue;
+  Widget _buildLabel(context) {
+    final cubit = OrderCubit.get(context);
+    final bool isSelected =
+        (isSize ? (cubit.sizeId == id) : (cubit.extraId == id));
     return Container(
       width: 32.0,
       height: 20.0,
@@ -37,8 +46,7 @@ class CustomShapeRadioOption<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        onChanged(value);
-        Fluttertoast.showToast(msg: value.toString());
+        onChanged(id);
       },
       splashColor: AppColors.redColor.withOpacity(0.2),
       child: Padding(
@@ -48,11 +56,11 @@ class CustomShapeRadioOption<T> extends StatelessWidget {
           children: [
             Row(
               children: <Widget>[
-                _buildLabel(),
+                _buildLabel(context),
                 TitleText(title: title),
               ],
             ),
-            ValueText(value: value),
+            ValueText(value: price.toDouble()),
           ],
         ),
       ),

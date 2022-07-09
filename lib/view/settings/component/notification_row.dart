@@ -2,7 +2,8 @@
 
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:my_orders/constants/app_colors.dart';
+
+import '../../../constants/app_colors.dart';
 
 class NotificationRow extends StatelessWidget {
   final bool value;

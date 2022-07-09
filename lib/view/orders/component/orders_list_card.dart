@@ -1,9 +1,13 @@
+// ignore_for_file: implementation_imports
+
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 
+import '../../../constants/app_colors.dart';
 import '../model/orders_model.dart';
 
 class OrdersListCard extends StatelessWidget {
-  final List<OrderModel> orderModel;
+  final List<Datum> orderModel;
   final int index;
 
   const OrdersListCard(
@@ -17,37 +21,32 @@ class OrdersListCard extends StatelessWidget {
       padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.red)),
+          border: Border.all(color: AppColors.redColor)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            orderModel[index].name,
+            orderModel[index].store!.name!,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           const SizedBox(height: 4.0),
           Text(
-            orderModel[index].descount,
+            "orders.payment".tr() + orderModel[index].payment.toString(),
             style: const TextStyle(fontSize: 14, color: Colors.black54),
           ),
-          const SizedBox(height: 4.0),
+          // const SizedBox(height: 4.0),
           Text(
-            "Date: ${orderModel[index].date}",
+            "orders.state".tr() + orderModel[index].state.toString(),
             style: const TextStyle(fontSize: 14, color: Colors.black54),
           ),
-          const SizedBox(height: 4.0),
-          Text(
-            "Address: ${orderModel[index].address}",
-            style: const TextStyle(fontSize: 14, color: Colors.black54),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: Align(
-              alignment: Alignment.center,
-              child: Text(
-                "Total: ${orderModel[index].totalPrice}",
-                style: const TextStyle(fontSize: 18, color: Colors.black),
-              ),
+          const SizedBox(height: 12.0),
+          Center(
+            child: Text(
+              "orders.total".tr() +
+                  orderModel[index].total!.toString() +
+                  ' ' +
+                  "restaurant.egp".tr(),
+              style: const TextStyle(fontSize: 18, color: Colors.black),
             ),
           )
         ],

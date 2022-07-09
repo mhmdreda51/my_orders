@@ -3,7 +3,8 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:my_orders/constants/app_colors.dart';
+
+import '../../../constants/app_colors.dart';
 
 class FilterResultAppBarTitle extends StatelessWidget {
   const FilterResultAppBarTitle({Key? key, required this.controller})

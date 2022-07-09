@@ -3,8 +3,8 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_orders/widgets/main_button.dart';
 
+import '../../widgets/main_button.dart';
 import 'component/checkout_form.dart';
 import 'controller/checkout_cubit.dart';
 

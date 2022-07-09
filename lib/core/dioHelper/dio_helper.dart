@@ -1,12 +1,10 @@
 import 'package:dio/dio.dart';
+import '../../constants/constants.dart';
+import '../cacheHelper/cache_helper.dart';
 
 class DioHelper {
   static Dio? dio;
-
-  //TODO: edit base url here
-  static const String baseUrl =
-      'https://www.inoutdesigners.com/talabat/public/api/';
-
+  static const String baseUrl = base;
   static init() {
     dio = Dio(
       BaseOptions(
@@ -20,13 +18,30 @@ class DioHelper {
     );
   }
 
-  //===============================================================
+//===============================================================
   static Future<Response> getData({
     required String url,
     Map<String, dynamic>? query,
   }) async {
-    //TODO: add your headers here
-    dio!.options.headers = {'Accept': 'application/json'};
+    dio!.options.headers = {
+      "Accept": "application/json",
+    };
+    return await dio!.get(
+      url,
+      queryParameters: query,
+    );
+  }
+
+//===============================================================
+  static Future<Response> getDataByToken({
+    required String url,
+    Map<String, dynamic>? query,
+  }) async {
+    dio!.options.headers = {
+      "Accept": "application/json",
+      if(CacheHelper.isLogged)
+        'Authorization': 'Bearer ${CacheHelper.getUserToken}',
+    };
     return await dio!.get(
       url,
       queryParameters: query,
@@ -36,25 +51,29 @@ class DioHelper {
 //===============================================================
   static Future<Response> postData({
     required String url,
-    required Map<String, dynamic> data,
+    dynamic data,
     Map<String, dynamic>? query,
   }) async {
-    //TODO: add your headers here
-    dio!.options.headers = {'Accept': 'application/json'};
-    return dio!.post(url, queryParameters: query, data: data, options: Options(
-      validateStatus: (status) {
-        return status! < 500;
-      },
-    ));
-  } //===============================================================
+    dio!.options.headers = {
+      "Accept": "application/json",
+      'Authorization': 'Bearer ${CacheHelper.getUserToken}',
+    };
+    return dio!.post(
+      url,
+      queryParameters: query,
+      data: data,
+    );
+  }
+//===============================================================
 
   static Future<Response> putData({
     required String url,
     required Map<String, dynamic> data,
     Map<String, dynamic>? query,
   }) async {
-    //TODO: add your headers here
-    dio!.options.headers = {'Accept': 'application/json'};
+    dio!.options.headers = {
+      "Accept": "application/json",
+    };
     return dio!.put(
       url,
       queryParameters: query,

@@ -1,3 +1,6 @@
+// ignore_for_file: implementation_imports
+
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 
 class PhoneTextField extends StatelessWidget {
@@ -19,9 +22,9 @@ class PhoneTextField extends StatelessWidget {
       keyboardType: TextInputType.phone,
       validator: (value) {
         if (value!.isEmpty) {
-          return 'phone must not be empty';
+          return "validation.phone_empty".tr();
         } else if (value.length < 11) {
-          return 'phone number must be 11 digits';
+          return "validation.phone_valid".tr();
         } else {
           return null;
         }

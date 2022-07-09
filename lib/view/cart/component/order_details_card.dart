@@ -2,18 +2,20 @@
 
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:my_orders/constants/app_colors.dart';
 import 'package:my_orders/view/cart/component/total_text.dart';
-import 'package:my_orders/view/cart/widgets/order_details_row.dart';
 
+import '../../../constants/app_colors.dart';
+import '../widgets/order_details_row.dart';
 import 'order_details_header.dart';
 
 class OrderDetailsCard extends StatelessWidget {
   const OrderDetailsCard({
     Key? key,
     required this.totalPrice,
+    required this.deliveryFee,
   }) : super(key: key);
   final double totalPrice;
+  final double deliveryFee;
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +33,8 @@ class OrderDetailsCard extends StatelessWidget {
           const OrderDetailsHeader(),
           const SizedBox(height: 0.0),
           OrderDetailsRow(
-            title: "cart.special_services".tr(),
-            price: 10,
-          ),
-          OrderDetailsRow(
             title: "cart.delivery_price".tr(),
-            price: 10,
+            price: deliveryFee,
           ),
           TotalText(totalPrice: totalPrice),
         ],

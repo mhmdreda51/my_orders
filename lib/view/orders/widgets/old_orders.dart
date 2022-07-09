@@ -1,27 +1,32 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: implementation_imports
 
+import 'package:easy_localization/src/public_ext.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:my_orders/view/orders/component/list_separator.dart';
-import 'package:my_orders/view/orders/component/orders_list_card.dart';
-import 'package:my_orders/view/orders/model/orders_model.dart';
+
+import '../../offers/component/no_offers.dart';
+import '../component/orders_list_card.dart';
+import '../controller/orders_cubit.dart';
 
 class OldOrders extends StatelessWidget {
   const OldOrders({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20.0),
-      child: ListView.separated(
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        physics: const BouncingScrollPhysics(),
-        separatorBuilder: (context, index) => ListSeparator(),
-        itemCount: orderModelList.length,
-        itemBuilder: (context, index) => OrdersListCard(
-          orderModel: orderModelList,
-          index: index,
-        ),
+    final cubit = OrdersCubit.get(context);
+    if (cubit.oldOrders == null ||
+        cubit.oldOrders!.data == null ||
+        cubit.oldOrders!.data!.isEmpty) {
+      return NoData(text: "orders.no_orders".tr());
+    }
+    return ListView.separated(
+      padding: const EdgeInsets.only(top: 20.0),
+      physics: const BouncingScrollPhysics(),
+      separatorBuilder: (context, index) => const Divider(height: 32),
+      itemCount: cubit.oldOrders!.data!.length,
+      itemBuilder: (context, index) => OrdersListCard(
+        orderModel: cubit.oldOrders!.data!,
+        index: index,
       ),
     );
   }

@@ -3,22 +3,20 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_orders/core/router/router.dart';
-import 'package:my_orders/view/drawer/drawer.dart';
 import 'package:my_orders/view/home/widgets/section_header.dart';
-import 'package:my_orders/view/search/search_view.dart';
-import 'package:my_orders/widgets/drawer_icon.dart';
 
+import '../../widgets/nothing_widget.dart';
+import '../drawer/drawer.dart';
+import 'component/buttons_shimmer.dart';
 import 'component/category_buttons_listview.dart';
-import 'component/filter_button.dart';
-import 'component/food_item_card.dart';
-import 'component/home_appbar_title.dart';
+import 'component/home_appbar.dart';
 import 'component/home_carousel.dart';
-import 'component/location_button.dart';
-import 'component/restaurant_item_card.dart';
+import 'component/item_card.dart';
+import 'component/item_card_shimmer.dart';
+import 'component/popular_brand_near_you_list_view.dart';
+import 'component/popular_brands_card_shimmer.dart';
+import 'component/special_offer_card.dart';
 import 'controller/home_cubit.dart';
-import 'model/food_card_model.dart';
-import 'model/restaurant_item_model.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -27,56 +25,77 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: BlocProvider(
-        create: (context) => HomeCubit(),
-        child: BlocBuilder<HomeCubit, HomeState>(
+        create: (context) => HomeCubit()
+          ..getSlides()
+          ..getStoreCategories()
+          ..getPopularBrands()
+          ..getPopularFood()
+          ..getSpecialOffers(),
+        child: BlocConsumer<HomeCubit, HomeState>(
+          listener: (context, state) {
+            if (state is GetItemError ||
+                state is GetStoreCategoriesError ||
+                state is GetPopularBrandsError ||
+                state is GetPopularFoodError ||
+                state is LogoutErrorState ||
+                state is GetStoreOfCategoryError ||
+                state is GetStoreError ||
+                state is GetStoreSubCategoriesByIdError ||
+                state is GetSpecialOffersError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("change_password.some_error".tr()),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+          },
           builder: (context, state) {
             final cubit = HomeCubit.get(context);
             return Scaffold(
               key: cubit.scaffoldKey,
               drawer: const NavigationDrawer(),
-              appBar: AppBar(
-                centerTitle: false,
-                leadingWidth: 40.0,
-                titleSpacing: 0.0,
-                leading: DrawerIcon(
-                    onPressed: () =>
-                        cubit.scaffoldKey.currentState!.openDrawer()),
-                title: HomeAppBarTitle(onPressed: () {
-                  MagicRouter.navigateTo(const SearchView());
-                }),
-                actions: const [
-                  FilterButton(),
-                  Center(
-                    child: Text(
-                      //TODO: add the address here from api
-                      'El-Galla St',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  LocationButton(),
-                ],
-              ),
+              appBar: homeAppBar(cubit),
               body: ListView(
                 shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
                 children: [
-                  CategoryButtonsListView(cubit: cubit),
-                  HomeCarousel(cubit: cubit),
-                  SectionHeader(
-                    buttonText: "home.view_more".tr(),
-                    headerText: "home.popular_food".tr(),
-                    onPressed: () {},
+                  cubit.storeCategoriesModel == null
+                      ? const ButtonsShimmer()
+                      : cubit.storeCategoriesModel!.data!.isEmpty
+                          ? NothingWidget(color: Colors.grey.shade300)
+                          : CategoryButtonsListView(
+                              storeCategoriesModel:
+                                  cubit.storeCategoriesModel!),
+                  cubit.slidesModel == null
+                      ? const SliderShimmer()
+                      : HomeCarousel(cubit: cubit),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: SectionHeader(
+                      showButton: false,
+                      buttonText: '',
+                      headerText: "home.popular_food".tr(),
+                      onPressed: () {},
+                    ),
                   ),
-                  FoodItemCard(foodCardModel: foodCardModel),
-                  SectionHeader(
-                    buttonText: "home.view_more".tr(),
-                    headerText: "home.brands".tr(),
-                    onPressed: () {},
+                  cubit.popularFoodModel == null
+                      ? const ItemCardShimmer()
+                      : ItemCard(cubit: cubit),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: SectionHeader(
+                      buttonText: '',
+                      headerText: "home.brands".tr(),
+                      onPressed: () {},
+                      showButton: false,
+                    ),
                   ),
-                  RestaurantItemCard(restaurantItemModel: restaurantItemModel),
+                  cubit.popularBrandsModel == null
+                      ? const PopularBrandsCardShimmer()
+                      : cubit.popularBrandsModel!.data!.isEmpty
+                          ? NothingWidget(color: Colors.grey.shade300)
+                          : PopularBrandNearYouListView(cubit: cubit),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: SectionHeader(
@@ -86,11 +105,13 @@ class HomeView extends StatelessWidget {
                       onPressed: () {},
                     ),
                   ),
-                  FoodItemCard(foodCardModel: foodCardModel),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: HomeCarousel(cubit: cubit),
-                  ),
+                  cubit.specialOffersModel == null
+                      ? const ItemCardShimmer()
+                      : cubit.specialOffersModel!.data!.isEmpty
+                          ? NothingWidget(color: Colors.grey.shade300)
+                          : SpecialOfferCard(
+                              specialOffersModel: cubit.specialOffersModel!),
+                  const SizedBox(height: 20.0),
                 ],
               ),
             );

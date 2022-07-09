@@ -12,9 +12,9 @@ class LoginChangePasswordVisibilityState extends LoginState {}
 class LoginLoadingState extends LoginState {}
 
 class LoginSuccessState extends LoginState {
-  late final Users users;
+  final UserModel userModel;
 
-  LoginSuccessState({required this.users});
+  LoginSuccessState({required this.userModel});
 }
 
 class LoginLErrorState extends LoginState {
@@ -22,8 +22,4 @@ class LoginLErrorState extends LoginState {
 
   LoginLErrorState({required this.error});
 }
-
-class GetUserDataLoadingState extends LoginState {}
-
-class GetUserDataSuccessState extends LoginState {}
 //===============================================================

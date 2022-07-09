@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../model/store_categories_model.dart';
 import '../../../core/router/router.dart';
 import '../../food/food_view.dart';
 import '../controller/home_cubit.dart';
-import '../model/category_button.dart';
 
 class CategoryButtonsListView extends StatelessWidget {
   const CategoryButtonsListView({
     Key? key,
-    required this.cubit,
+    required this.storeCategoriesModel,
   }) : super(key: key);
-
-  final HomeCubit cubit;
+  final StoreCategoriesModel storeCategoriesModel;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +19,7 @@ class CategoryButtonsListView extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: categoryButtonModel.length,
+        itemCount: storeCategoriesModel.data!.length,
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         itemBuilder: (context, index) => Padding(
@@ -28,17 +27,27 @@ class CategoryButtonsListView extends StatelessWidget {
           child: ElevatedButton.icon(
             style: ElevatedButton.styleFrom(elevation: 0.0),
             onPressed: () {
-              //TODO: insert the on pressed function
-              MagicRouter.navigateTo(const FoodView());
+              MagicRouter.navigateTo(BlocProvider.value(
+                value: HomeCubit()
+                  ..getStoreSubCategoriesById(
+                      id: storeCategoriesModel.data![index].id.toString())
+                  ..getStoreOfCategory(
+                      categoryId:
+                          storeCategoriesModel.data![index].id.toString()),
+                child: const FoodView(),
+              ));
             },
             label: Text(
-              categoryButtonModel[index].categoryName,
+              storeCategoriesModel.data![index].name.toString(),
               style:
                   const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w300),
             ),
-            icon: FaIcon(
-              categoryButtonModel[index].categoryIcon,
-              size: 14.0,
+            icon: SizedBox(
+              height: 20.0,
+              width: 30.0,
+              child: Image.network(
+                  storeCategoriesModel.data![index].image.toString(),
+                  fit: BoxFit.cover),
             ),
           ),
         ),

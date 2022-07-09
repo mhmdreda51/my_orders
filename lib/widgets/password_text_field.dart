@@ -29,9 +29,11 @@ class PasswordTextField extends StatelessWidget {
       obscureText: obscureText,
       validator: (value) {
         if (value!.isEmpty) {
-          return 'password must not be empty';
+          return "validation.password_empty".tr();
         } else if (value.length < 6) {
-          return 'password must be at least 8 characters';
+          return "validation.password_valid".tr();
+        } else if (value.contains(' ')) {
+          return "validation.white_space".tr();
         } else {
           return null;
         }
@@ -39,13 +41,10 @@ class PasswordTextField extends StatelessWidget {
       onFieldSubmitted: onFieldSubmitted,
       decoration: InputDecoration(
         isDense: true,
-        hintText: "login.password".tr(),
+        hintText: hintText,
         border: const OutlineInputBorder(),
         prefixIcon: const Icon(Icons.lock_outlined, size: 24.0),
-        suffixIcon: IconButton(
-          onPressed: onPressed,
-          icon: Icon(icon),
-        ),
+        suffixIcon: IconButton(onPressed: onPressed, icon: Icon(icon)),
       ),
     );
   }
